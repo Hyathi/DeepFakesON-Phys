@@ -12,7 +12,7 @@ import glob
 import sys
 import scipy.io
 import time 
-
+import argparse
 
 def load_test_motion(carpeta):
     X_test = []
@@ -55,7 +55,12 @@ model = load_model('..\\pretrained models\\DeepFakesON-Phys_CelebDF_V2.h5')
 # print(model.summary())
 # input("Press Enter to continue...")
 
-image_path = r"D:\Pattern_Letters_HR_PAD\BBDD\3DMAD"
+parser = argparse.ArgumentParser("Predict test videos")
+parser.add_argument('--input-dir', type=str, required=True, help="path to directory with videos")
+args = parser.parse_args()
+input_dir = args.input_dir
+
+image_path = os.path.join(input_dir)
 carpeta_deep= os.path.join(image_path, "DeepFrames")
 carpeta_raw= os.path.join(image_path, "RawFrames")
 

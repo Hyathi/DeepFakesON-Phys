@@ -2,11 +2,14 @@
 import numpy as np
 import os
 import cv2
+import argparse
 
+parser = argparse.ArgumentParser("Predict test videos")
+parser.add_argument('--input-dir', type=str, required=True, help="path to directory with videos")
+args = parser.parse_args()
+input_dir = args.input_dir
 
-
-
-image_path = 'D:\\Pattern_Letters_HR_PAD\\BBDD\\3DMAD\\session03\\'
+image_path = os.path.join(input_dir)
 image_name_video = []
 # Load the cascade
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
@@ -21,10 +24,10 @@ for f in [f for f in os.listdir(image_path)]:
     frame_rate = cap.get(cv2.CAP_PROP_FPS)
     nFrames = cap.get(7)
     max_frames = int(nFrames)
-    ruta_parcial = os.path.join('D:\\Pattern_Letters_HR_PAD\\BBDD\\3DMAD\\DeepFrames',f) 
+    ruta_parcial = os.path.join(input_dir, "DeepFrames")
     if not(os.path.exists(ruta_parcial)) :
         os.mkdir(ruta_parcial);
-    ruta_parcial2 = os.path.join('D:\\Pattern_Letters_HR_PAD\\BBDD\\3DMAD\\RawFrames',f) 
+    ruta_parcial2 = os.path.join(input_dir, "RawFrames") 
     if not(os.path.exists(ruta_parcial2)) :
         os.mkdir(ruta_parcial2);
     
