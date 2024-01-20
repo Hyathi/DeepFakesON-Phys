@@ -61,8 +61,11 @@ args = parser.parse_args()
 input_dir = args.input_dir
 
 image_path = os.path.join(input_dir)
+print(f"image_path: {image_path}")
 carpeta_deep= os.path.join(image_path, "DeepFrames")
+print(f"carpeta_deep: {carpeta_deep}")
 carpeta_raw= os.path.join(image_path, "RawFrames")
+print(f"carpeta_raw: {carpeta_raw}")
 
 test_data, images_names = load_test_motion(carpeta_deep)
 test_data2, images_names = load_test_attention(carpeta_raw)
@@ -70,6 +73,11 @@ test_data2, images_names = load_test_attention(carpeta_raw)
 test_data = np.array(test_data, copy=False, dtype=np.float32)
 test_data2 = np.array(test_data2, copy=False, dtype=np.float32)
 
+# if data is empty, show error
+if len(test_data) == 0:
+    print(f"test_data Error: No images found in the provided path: {image_path}")
+if len(test_data2) == 0:
+    print(f"test_data2 Error: No images found in the provided path: {image_path}")
 predictions = model.predict([test_data, test_data2], batch_size=batch_size, verbose=1)
 bufsize = 1
 nombre_fichero_scores = 'deepfake_scores.txt'
