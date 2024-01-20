@@ -51,12 +51,12 @@ def load_test_attention(carpeta):
 np.set_printoptions(threshold=np.inf)
 data = []
 batch_size = 128
-model = load_model('..\\pretrained models\\DeepFakesON-Phys_CelebDF_V2.h5')
-# print(model.summary())
-# input("Press Enter to continue...")
+model = load_model('../models/DeepFakesON-Phys_CelebDF_V2.h5')
+print(model.summary())
+input("Press Enter to continue...")
 
 parser = argparse.ArgumentParser("Predict test videos")
-parser.add_argument('input-dir', type=str, required=True, help="path to directory with videos")
+parser.add_argument('input_dir', type=str, help="path to directory with videos")
 args = parser.parse_args()
 input_dir = args.input_dir
 
