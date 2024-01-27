@@ -16,7 +16,7 @@ image_name_video = []
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 
 for f in [f for f in os.listdir(image_path)]:
-    print(f"Processing video {f}")
+    print(f"Processing video: {f}")
     if not("_C.avi" in f): #OULU
         print(f"Skipping video {f}")
         continue
@@ -140,17 +140,32 @@ for f in [f for f in os.listdir(image_path)]:
         D_B[:,:,k] = (D_B[:,:,k] - medias_B)/(desviaciones_B+000.1)
     
     print(f"Sixth set of loops")  
-    for k in range(0,max_frames):
-        
+    for k in range(0, max_frames):
+        # print(f"medias_R: {medias_R}")
+        # print(f"desviaciones_R: {desviaciones_R}")
+
+        # Avoid division by zero
+        divisor_R = desviaciones_R + 0.1
+        divisor_G = desviaciones_G + 0.1
+        divisor_B = desviaciones_B + 0.1
+
+        D_R[:,:,k] = (D_R[:,:,k] - medias_R) / divisor_R
+        D_G[:,:,k] = (D_G[:,:,k] - medias_G) / divisor_G
+        D_B[:,:,k] = (D_B[:,:,k] - medias_B) / divisor_B
+
+        # Handle NaN or Inf values
+        D_R[:,:,k] = np.nan_to_num(D_R[:,:,k], nan=0, posinf=0, neginf=0)
+        D_G[:,:,k] = np.nan_to_num(D_G[:,:,k], nan=0, posinf=0, neginf=0)
+        D_B[:,:,k] = np.nan_to_num(D_B[:,:,k], nan=0, posinf=0, neginf=0)
+
         imagen[:,:,0] = D_R[:,:,k]
         imagen[:,:,1] = D_G[:,:,k]
         imagen[:,:,2] = D_B[:,:,k]
-        
-        imagen= np.uint8(imagen)
 
-        nombre_salvar= os.path.join(ruta_parcial,str(k)+'.png')
-        cv2.imwrite(nombre_salvar, imagen)            
-        
+        imagen = np.uint8(imagen)
+
+        nombre_salvar = os.path.join(ruta_parcial, str(k) + '.png')
+        cv2.imwrite(nombre_salvar, imagen)
         
     cap.release()
     cv2.destroyAllWindows()
