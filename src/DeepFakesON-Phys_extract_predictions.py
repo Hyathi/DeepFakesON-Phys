@@ -18,34 +18,32 @@ def load_test_motion(carpeta):
     X_test = []
     images_names = []
     image_path = carpeta
-    print(carpeta)
-    print('Read test images')
-    for f in [f for f in os.listdir(image_path) if os.path.isdir(os.path.join(image_path, f))]:
-        carpeta= os.path.join(image_path, f)
-        print(carpeta)
-        for imagen in [imagen for imagen in os.listdir(carpeta) if os.path.isfile(os.path.join(carpeta, imagen))]:
-            imagenes = os.path.join(carpeta, imagen)
-            img = cv2.resize(cv2.imread(imagenes, cv2.IMREAD_COLOR), (36, 36))
-            img = img.transpose((-1,0,1))
-            X_test.append(img)
-            images_names.append(imagenes)
+    print(f"Reading test images from: {image_path}")
+    
+    for imagen in os.listdir(image_path):
+        imagenes = os.path.join(image_path, imagen)
+        print(f"Image: {imagenes}")
+        img = cv2.resize(cv2.imread(imagenes, cv2.IMREAD_COLOR), (36, 36))
+        img = img.transpose((-1, 0, 1))
+        X_test.append(img)
+        images_names.append(imagenes)
+        
     return X_test, images_names
-
 
 def load_test_attention(carpeta):
     X_test = []
     images_names = []
     image_path = carpeta
-    print('Read test images')
-    for f in [f for f in os.listdir(image_path) if os.path.isdir(os.path.join(image_path, f))]:
-        carpeta= os.path.join(image_path, f)
-        print(carpeta)
-        for imagen in [imagen for imagen in os.listdir(carpeta) if os.path.isfile(os.path.join(carpeta, imagen))]:
-            imagenes = os.path.join(carpeta, imagen)
-            img = cv2.resize(cv2.imread(imagenes, cv2.IMREAD_COLOR), (36, 36))
-            img = img.transpose((-1,0,1))
-            X_test.append(img)
-            images_names.append(imagenes)
+    print(f"Reading test images from: {image_path}")
+    
+    for imagen in os.listdir(image_path):
+        imagenes = os.path.join(image_path, imagen)
+        print(f"Image: {imagenes}")
+        img = cv2.resize(cv2.imread(imagenes, cv2.IMREAD_COLOR), (36, 36))
+        img = img.transpose((-1, 0, 1))
+        X_test.append(img)
+        images_names.append(imagenes)
+        
     return X_test, images_names
 
 np.set_printoptions(threshold=np.inf)
@@ -67,12 +65,19 @@ print(f"carpeta_deep: {carpeta_deep}")
 carpeta_raw= os.path.join(image_path, "RawFrames")
 print(f"carpeta_raw: {carpeta_raw}")
 
+input("Press Enter to proceed with predictions...")
 test_data, images_names = load_test_motion(carpeta_deep)
 test_data2, images_names = load_test_attention(carpeta_raw)
+#print(f"test_data with load_test_motion: {test_data}")
+#print(f"test_data2 with load_test_attention: {test_data2}")
 
+input("Press Enter to proceed with predictions...")
 test_data = np.array(test_data, copy=False, dtype=np.float32)
 test_data2 = np.array(test_data2, copy=False, dtype=np.float32)
+#print(f"test_data with np.array: {test_data}")
+#print(f"test_data2 with np.array: {test_data2}")
 
+input("Press Enter to proceed with predictions...")
 # if data is empty, show error
 if len(test_data) == 0:
     print(f"test_data Error: No images found in the provided path: {image_path}")

@@ -2,3 +2,7 @@ imageio
 scikit-image
 tensorflow
 opencv-python==4.5.5.64
+numpy==1.24.3
+protobuf==3.20.*
+tensorboard==2.13
+typing-extensions==4.5.0
